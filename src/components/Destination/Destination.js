@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Container, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import { UserContext } from '../../App';
+import Map from '../Map/Map';
 
 const useStyles = makeStyles({
     rideOptionImg: {
@@ -34,7 +35,7 @@ const Destination = () => {
     return (
         <div>
             <Container>
-                <Grid container spacing={3} style={{ paddingTop: 20 }}>
+                <Grid container spacing={3} style={{ paddingTop: 20 , minHeight:'calc(100vh - 64px)'}}>
                     <Grid item md={4} sm={5} xs={12}>
                         <Paper style={{ padding: 15 }}>
                             <Grid container spacing={3}>
@@ -101,21 +102,12 @@ const Destination = () => {
                                    </Grid>)
                                     }
                                     </>}
-                                {/* {showSearchResult &&
-                                    <Grid item xs={12}>
-                                        <Paper>
-                                            <Typography className={searchedItem} variant="body1">
-                                                <img className={rideOptionImg} src={rideOption.image} alt="" />
-                                                <span>{rideOption.optionName} <FontAwesomeIcon icon={faUserFriends} /> 4</span>
-                                                <span> $80</span>
-                                            </Typography>
-                                        </Paper>
-                                    </Grid>
-                                } */}
                             </Grid>
                         </Paper>
                     </Grid>
-                    <Grid item md={8} sm={7} xs={12}></Grid>
+                    <Grid item md={8} sm={7} xs={12}>
+                        <Map/>
+                    </Grid>
                 </Grid>
             </Container>
         </div>
