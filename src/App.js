@@ -28,9 +28,9 @@ function App() {
               <Route exact path='/' component={Home}/>
               <Route path='/login' component={LoginSignUp}/>
               <Route path='/signup' component={LoginSignUp}/>
-              <Route path='/destination'>
+              <PrivateRoute path='/destination'>
                 <Destination/>
-              </Route>
+              </PrivateRoute>
           </Switch>
       </Router>
     </div>

@@ -15,6 +15,7 @@ import { useHistory, useLocation } from 'react-router';
 import { UserContext } from '../../App';
 import { createUser, logInHandler } from '../LoginManager/LoginManager';
 import { Link } from 'react-router-dom';
+import { Alert } from '@material-ui/lab';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(1),
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginSignUp() {
   const classes = useStyles();
-  const {loggedUser, setLoggedUser} = useContext(UserContext);
+  const {loggedInUser, setLoggedInUser} = useContext(UserContext);
   const [user, setUser] = useState({})
   const history = useHistory();
   const location = useLocation();
@@ -50,40 +51,90 @@ export default function LoginSignUp() {
     newUser[e.target.name] = e.target.value;
     setUser(newUser);
   }
-  const login = (e) => {
-    logInHandler(user.email, user.password)
+  // const login = (e) => {
+  //   logInHandler(user.email, user.password)
+  //     .then(res => {
+  //       setUser(res)
+  //       setLoggedInUser(res);
+  //       console.log(res);
+  //       history.replace(from);
+  //     })
+  //   e.preventDefault();
+  // }
+  // const signUp = e => {
+  //   createUser(user.email, user.password)
+  //   .then(res => {
+  //     setUser(res)
+  //     setLoggedInUser(res)
+  //     history.replace(from)
+  //     console.log(res);
+  //   })
+  //   e.preventDefault();
+  // }
+  const loginSignUp = e => {
+    
+    e.preventDefault();
+    if(pathname === '/signup'){
+      if(user.password !== user.confirmPassword){
+        setInvalidMessage('Password do not match!');
+        setIsFieldValid(false);
+        return;
+      }
+    }
+    if(!/\S+@\S+\.\S+/.test(user.email)){
+      setInvalidMessage('Enter a valid email');
+      setIsFieldValid(false);
+      return;
+    }
+    // if(!/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/.test(user.password)){
+    //   setInvalidMessage('Password must have at least 1 uppercase, 1 lowercase letter and 1 number');
+    //   setIsFieldValid(false);
+    //   return;
+    // }
+    if(user.password.length < 6){
+      setInvalidMessage('Password must be at least 6 characters');
+      setIsFieldValid(false);
+      return;
+    }
+    if(pathname === '/signup'){
+      createUser(user.email, user.password)
       .then(res => {
         setUser(res)
-        setLoggedUser(res);
+        setLoggedInUser(res)
+        history.replace(from)
         console.log(res);
-
-        history.replace(from);
-
       })
-    e.preventDefault();
-  }
-  const signUp = e => {
-    createUser(user.email, user.password)
-    .then(res => {
-      setUser(res)
-      setLoggedUser(res)
-      history.replace(from)
-      console.log(res);
-    })
-    e.preventDefault();
+    }
+    if(pathname === '/login'){
+      logInHandler(user.email, user.password)
+      .then(res => {
+        setUser(res)
+        setLoggedInUser(res);
+        console.log(res);
+        history.replace(from);
+      })
+    } 
   }
   // const [isPasswordMatch, setIsPasswordMatch] = useState(true);
-  // const [isEmailValid, setIsEmailValid] = useState(true)
+  const [isFieldValid, setIsFieldValid] = useState(true)
+  const [invalidMessage, setInvalidMessage] = useState('')
   // const [isPasswordValid, setIsPasswordValid] = useState(true)
   // const onSubmit = data => {
-  //   setIsPasswordMatch((pathname === '/signup') && (data.password === data.confirmPassword));
-  //   setIsEmailValid(/\S+@\S+\.\S+/.test(data.email));
-  //   setIsPasswordValid(/\d{1}/.test(data.password) && data.password.length >= 6)
-  //   setTimeout(() => {
-  //     setIsPasswordMatch(true);
-  //     setIsEmailValid(true);
-  //     setIsPasswordValid(true)
-  //   }, 3000);
+    const errorHandler = ()=> {
+      // setIsPasswordMatch((pathname === '/signup') && (user.password === user.confirmPassword));
+      // setIsEmailValid(/\S+@\S+\.\S+/.test(user.email));
+      // setIsPasswordValid(/\d{1}/.test(user.password) && user.password.length >= 6)
+      // setTimeout(() => {
+      //   setIsPasswordMatch(true);
+      //   setIsEmailValid(true);
+      //   setIsPasswordValid(true)
+      // }, 3000);
+    }
+    const submitButtonHandler = (e)=> {             
+      e.preventDefault();
+      errorHandler();
+      loginSignUp();    
+    }
   //   if(pathname === '/signup'){
   //     createNewUser(data.name,data.email,data.password)
   //     .then(res => {
@@ -114,7 +165,6 @@ export default function LoginSignUp() {
                       id="name"
                       label="Name"
                       autoFocus
-                      // inputRef={register}
                     />
                   </Grid>}
               <Grid item xs={12}>
@@ -126,7 +176,6 @@ export default function LoginSignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
-                  // inputRef={register}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -139,7 +188,6 @@ export default function LoginSignUp() {
                   label="Password"
                   type="password"
                   id="password"
-                  // inputRef={register}
                 />
               </Grid>
               {pathname === '/signup' && <Grid item xs={12}>
@@ -152,7 +200,6 @@ export default function LoginSignUp() {
                   label="Confirm Password"
                   type="password"
                   id="confirmPassword"
-                  // inputRef={register}
                 />
               </Grid>}
               <Grid item xs={12}>
@@ -162,17 +209,27 @@ export default function LoginSignUp() {
                 />}
 
               </Grid>
-              {/* {!isPasswordMatch && <Grid item xs={12}>
-                <Alert variant="filled" severity="error">Password do not match!</Alert>
+              {!isFieldValid && <Grid item xs={12}>
+                <Alert variant="filled" severity="error">{invalidMessage}</Alert>
                 </Grid>}
-              {!isEmailValid && <Grid item xs={12}>
+              {/* {!isEmailValid && <Grid item xs={12}>
                 <Alert variant="filled" severity="error">Enter a valid email</Alert>
                 </Grid>}
               {!isPasswordValid && <Grid item xs={12}>
                 <Alert variant="filled" severity="warning">Password contain at least a number and 6 digit</Alert>
                 </Grid>} */}
             </Grid>
-            {pathname === '/signup' ?
+              <Button
+                onClick={loginSignUp}
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                {pathname === '/signup' ? 'Sign Up' : 'Log in'}
+          </Button>
+            {/* {pathname === '/signup' ?
             // <Input type="submit"/>:
               <Button
                 onClick={signUp}
@@ -193,7 +250,7 @@ export default function LoginSignUp() {
                 className={classes.submit}
               >
                 Log In
-        </Button>}
+        </Button>} */}
           </form>
               {pathname === '/signup' ?
                   <span>Already have an account? <Link to="/login">
