@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {Link} from "react-router-dom";
+import { UserContext } from '../../App';
+import { Avatar } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,12 +27,12 @@ const useStyles = makeStyles((theme) => ({
     '&:hover':{
         transform:'translateY(-2px)'
     }
-  },
+  }
 }));
 
 export default function ButtonAppBar() {
-  const {root, title, navItem} = useStyles();
-
+  const {root, title, navItem, userName} = useStyles();
+  const {loggedInUser} = useContext(UserContext);
   return (
     <div className={root}>
       <AppBar position="static" >
@@ -38,11 +40,17 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={title}>
             Riders Arena
           </Typography>
+          
           <Link className={navItem} to="/">Home</Link>
           <Link className={navItem} to="destination">Destination</Link>
           <Link className={navItem} to="#">Blog</Link>
           <Link className={navItem} to="#">Contact</Link>
-          <Link className={navItem} to="/login"><Button variant="outlined" color="inherit">Login</Button></Link>
+          {loggedInUser.email ? 
+          <Typography variant="body1" style={{fontWeight:700}}>
+            {loggedInUser.displayName}</Typography> : 
+            <Link className={navItem} to="/login">
+              <Button variant="outlined" color="inherit">
+                Login</Button></Link>}
         </Toolbar>
       </AppBar>
     </div>

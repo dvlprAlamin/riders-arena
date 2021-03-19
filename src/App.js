@@ -14,10 +14,8 @@ import './App.css';
 export const UserContext = createContext();
 function App() {
   const [rideOption, setRideOption] = useState({})
-  const [loggedInUser, setLoggedInUser] = useState({
-    email:'',
-    password:''
-  })
+  const [loggedInUser, setLoggedInUser] = useState({})
+  console.log(loggedInUser.email)
   return (
     <UserContext.Provider value={{loggedInUser, setLoggedInUser,rideOption, setRideOption}}>
     <div className="app">

@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
     const { ticketItemImg, ticketItem, ticketContainer } = useStyles();
     const {setRideOption} = useContext(UserContext);
+    // default value
+    setRideOption(rideOption[0])
     return (
         <div >
             <Container>
