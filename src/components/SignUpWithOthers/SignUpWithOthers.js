@@ -1,10 +1,10 @@
-import { faFacebookF, faGithub, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import {  faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { UserContext } from '../../App';
-import { fbSignInHandler, firebaseInitialize, githubSignInHandler, googleSignInHandler, twitterSignInHandler } from '../LoginManager/LoginManager';
+import { firebaseInitialize, githubSignInHandler, googleSignInHandler } from '../LoginManager/LoginManager';
 
 const useStyles = makeStyles((theme) => ({
     root:{
@@ -43,20 +43,6 @@ const SignUpWithOthers = () => {
             history.replace(from);
         })
     }
-    const fbSignIn = () => {
-        fbSignInHandler()
-        .then(res => {
-            setLoggedInUser(res);
-            history.replace(from);
-        })
-    }
-    const twitterSignIn = () => {
-        twitterSignInHandler()
-        .then(res => {
-            setLoggedInUser(res);
-            history.replace(from);
-        })
-    }
     const githubSignIn = () => {
         githubSignInHandler()
         .then(res => {
@@ -69,8 +55,6 @@ const SignUpWithOthers = () => {
             <Typography variant="h6">or sign up with</Typography>
             <Grid>
                 <FontAwesomeIcon onClick={googleSignIn} className={brandIcons} icon={faGoogle} />
-                <FontAwesomeIcon onClick={fbSignIn} className={brandIcons} icon={faFacebookF} />
-                <FontAwesomeIcon onClick={twitterSignIn} className={brandIcons} icon={faTwitter} />
                 <FontAwesomeIcon onClick={githubSignIn} className={brandIcons} icon={faGithub} />
             </Grid>
         </div>

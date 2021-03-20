@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginSignUp() {
   const classes = useStyles();
-  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  const { setLoggedInUser } = useContext(UserContext);
   const [user, setUser] = useState({})
   const history = useHistory();
   const location = useLocation();

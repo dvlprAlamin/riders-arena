@@ -18,29 +18,6 @@ export const googleSignInHandler = () => {
         });
 }
 
-export const fbSignInHandler = () => {
-    const fbProvider = new firebase.auth.FacebookAuthProvider();
-    return firebase.auth().signInWithPopup(fbProvider)
-        .then((res) => {
-            const user = res.user;
-            return user;
-        })
-        .catch((error) => {
-            const errorMessage = error.message;
-            return errorMessage;
-        });
-}
-export const twitterSignInHandler = () => {
-    const twitterProvider = new firebase.auth.TwitterAuthProvider();
-    return firebase.auth().signInWithPopup(twitterProvider)
-    .then((res) => {
-    const user = res.user;
-    return user;
-  }).catch((error) => {
-    const errorMessage = error.message;
-    return errorMessage;
-  });
-}
 export const githubSignInHandler = () => {
     const githubProvider = new firebase.auth.GithubAuthProvider();
     return firebase.auth().signInWithPopup(githubProvider)
@@ -73,15 +50,7 @@ const updateUserName = name =>{
       console.log(error)
     });
   }
-export const signOutHandler = () => {
-    return firebase.auth().signOut()
-    .then((res) => {
-        console.log('sign out success');
-        return '';
-    }).catch((error) => {
-        return error;
-    });
-}
+
 export const logInHandler = (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password)
         .then((res) => {
