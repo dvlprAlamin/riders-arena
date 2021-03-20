@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import {Link} from "react-router-dom";
 import { UserContext } from '../../App';
 import { Avatar } from '@material-ui/core';
+import { signOutHandler } from '../LoginManager/LoginManager';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +52,13 @@ export default function ButtonAppBar() {
             <Link className={navItem} to="/login">
               <Button variant="outlined" color="inherit">
                 Login</Button></Link>}
+          {loggedInUser.email ? <Link className={navItem} to="/">
+              <Button variant="outlined" color="inherit"
+              onClick={signOutHandler}
+              >
+                Sign out</Button></Link> : <Link className={navItem} to="/signup">
+              <Button variant="outlined" color="inherit">
+                Sign up</Button></Link>}
         </Toolbar>
       </AppBar>
     </div>

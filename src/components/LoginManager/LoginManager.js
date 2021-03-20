@@ -77,7 +77,7 @@ export const signOutHandler = () => {
     return firebase.auth().signOut()
     .then((res) => {
         console.log('sign out success');
-        return res;
+        return '';
     }).catch((error) => {
         return error;
     });
