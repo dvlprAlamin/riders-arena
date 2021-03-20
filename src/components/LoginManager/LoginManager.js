@@ -1,8 +1,8 @@
-import React, { createContext, useContext } from 'react';
+// import React, { createContext, useContext } from 'react';
 import firebase from 'firebase/app'
 import "firebase/auth";
 import { firebaseConfig } from './firebaseconfig';
-import { useHistory } from 'react-router';
+// import { useHistory } from 'react-router';
 
 export const firebaseInitialize = ()=> {
     !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
@@ -11,72 +11,62 @@ export const firebaseInitialize = ()=> {
 export const googleSignInHandler = () => {
     const googleProvider = new firebase.auth.GoogleAuthProvider();
     return firebase.auth().signInWithPopup(googleProvider)
-        .then((result) => {
-            const credential = result.credential;
-            const token = credential.accessToken;
-            const user = result.user;
+        .then((res) => {
+            // const credential = result.credential;
+            const user = res.user;
             return user;
-            // setUserauth({
-            //     isSignIn: true,
-            //     name: user.displayName,
-            //     email: '',
-            //     image: user.photoURL
-            // });
         }).catch((error) => {
-            const errorCode = error.code;
+            // const errorCode = error.code;
             const errorMessage = error.message;
-            const email = error.email;
-            const credential = error.credential;
             return errorMessage;
         });
-    // console.log('clicked');
 }
 
 export const fbSignInHandler = () => {
     const fbProvider = new firebase.auth.FacebookAuthProvider();
     return firebase.auth().signInWithPopup(fbProvider)
-        .then((result) => {
-            const credential = result.credential;
-            const user = result.user;
-            const accessToken = credential.accessToken;
+        .then((res) => {
+            // const credential = result.credential;
+            const user = res.user;
+            // const accessToken = credential.accessToken;
             return user;
         })
         .catch((error) => {
-            const errorCode = error.code;
+            // const errorCode = error.code;
             const errorMessage = error.message;
-            const email = error.email;
-            const credential = error.credential;
+            // const email = error.email;
+            // const credential = error.credential;
             return errorMessage;
         });
 }
 export const twitterSignInHandler = () => {
     const twitterProvider = new firebase.auth.TwitterAuthProvider();
     return firebase.auth().signInWithPopup(twitterProvider)
-    .then((result) => {
-    const credential = result.credential;
-    const token = credential.accessToken;
-    const secret = credential.secret;
-    const user = result.user;
+    .then((res) => {
+    // const credential = result.credential;
+    // const token = credential.accessToken;
+    // const secret = credential.secret;
+    const user = res.user;
     return user;
   }).catch((error) => {
-    const errorCode = error.code;
+    // const errorCode = error.code;
     const errorMessage = error.message;
-    const email = error.email;
-    const credential = error.credential;
+    // const email = error.email;
+    // const credential = error.credential;
+    return errorMessage;
   });
 }
 export const githubSignInHandler = () => {
     const githubProvider = new firebase.auth.GithubAuthProvider();
     return firebase.auth().signInWithPopup(githubProvider)
     .then((res) => {
-    const credential = res.credential;
-    const token = credential.accessToken;
+    // const credential = res.credential;
+    // const token = credential.accessToken;
     const user = res.user;
     return user
   }).catch((error) => {
-    const errorCode = error.code;
+    // const errorCode = error.code;
     const errorMessage = error.message;
-    const email = error.email;
     return errorMessage;
   });
 }
@@ -87,7 +77,7 @@ export const createUser = (name, email , password) => {
             return res.user;
         })
         .catch((error) => {
-            const errorCode = error.code;
+            // const errorCode = error.code;
             const errorMessage = error.message;
             return errorMessage;
         });
@@ -107,9 +97,7 @@ export const signOutHandler = () => {
     .then((res) => {
         console.log('sign out success');
         return res;
-        
     }).catch((error) => {
-        // An error happened.
         return error;
     });
 }
@@ -120,7 +108,7 @@ export const logInHandler = (email, password) => {
             return user;
         })
         .catch((error) => {
-            const errorCode = error.code;
+            // const errorCode = error.code;
             const errorMessage = error.message;
             return errorMessage;
         });

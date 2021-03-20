@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 firebaseInitialize();
 const SignUpWithOthers = () => {
-    const {loggedInUser,setLoggedInUser} = useContext(UserContext)
+    const {brandIcons, root} = useStyles();
+    const { setLoggedInUser } = useContext(UserContext)
     const history = useHistory();
     const location = useLocation();
     const { from } = location.state || { from: { pathname: "/" } };
@@ -38,38 +39,31 @@ const SignUpWithOthers = () => {
     const googleSignIn = () => {
         googleSignInHandler()
         .then(res => {
-            // setUser(res)
-            setLoggedInUser(true);
+            setLoggedInUser(res);
             history.replace(from);
         })
     }
     const fbSignIn = () => {
         fbSignInHandler()
         .then(res => {
-            // setUser(res)
             setLoggedInUser(res);
             history.replace(from);
-
         })
     }
     const twitterSignIn = () => {
         twitterSignInHandler()
         .then(res => {
-            // setUser(res)
             setLoggedInUser(res);
             history.replace(from);
-
         })
     }
     const githubSignIn = () => {
         githubSignInHandler()
         .then(res => {
-            // setUser(res)
             setLoggedInUser(res);
             history.replace(from);
         })
     }
-    const {brandIcons, root} = useStyles();
     return (
         <div className={root}>  
             <Typography variant="h6">or sign up with</Typography>
