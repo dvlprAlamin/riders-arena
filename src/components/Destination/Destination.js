@@ -132,7 +132,7 @@ const Destination = () => {
                             </Grid>
                         </Paper>
                     </Grid>
-                    <Grid item md={8} sm={7} xs={12}>
+                    <Grid style={{minHeight:400}} item md={8} sm={7} xs={12}>
                         <Map />
                     </Grid>
                 </Grid>
